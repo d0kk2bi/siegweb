@@ -6,8 +6,12 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 # Update ubuntu
 RUN apt update && apt upgrade -y
 
+# Install APM
+RUN apt install apache2 mysql-server php php-common \
+    php-mysql php-mbstring php-curl php-xml php-gd php-zip -y
+
 # Install python3, crontab
-RUN apt install cron, python3 python3-pip -y
+RUN apt install cron python3 python3-pip -y
 
 # Install python3 package
 RUN pip3 install pymysql
