@@ -1,5 +1,9 @@
 FROM ubuntu:20.04
 
+# Copy client files
+COPY client.py /client/client.py
+COPY client.sql /client/client.sql
+
 # Change TimeZone
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
