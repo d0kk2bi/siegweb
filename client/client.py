@@ -2,7 +2,7 @@ import pymysql, hashlib, time, os
 
 team = ""   # Team name
 user = ""   # User name (mysql name)
-passwd = "" # User password (mysql password)
+passwd = "" # User passwd (mysql password)
 
 now = time.localtime()
 hour = now.tm_hour
