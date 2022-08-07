@@ -1,8 +1,8 @@
 import pymysql, hashlib, time, os
 
-team = ""   # Select "Team A" or "Team B" or "Team C"
-user = ""   # Input client's nickname -> must be mysql user
-passwd = "" # Input client's mysql password
+team = ""   # Team name
+user = ""   # User name (mysql name)
+passwd = "" # User password (mysql password)
 
 now = time.localtime()
 hour = now.tm_hour

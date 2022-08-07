@@ -14,9 +14,6 @@ RUN apt update && apt upgrade -y
 RUN apt install apache2 mysql-server php php-common \
     php-mysql php-mbstring php-curl php-xml php-gd php-zip -y
 
-# Start mysql service
-RUN service mysql start
-
 # Install python3, crontab, vim
 RUN apt install vim cron python3 python3-pip -y
 
