@@ -16,7 +16,7 @@ mysql
 source /client/client.sql
 ```
 
-_mysql 시작 및 변경 내용 적용_
+&nbsp;_mysql 시작 및 변경 내용 적용_
 
 <br />
 
@@ -24,4 +24,4 @@ _mysql 시작 및 변경 내용 적용_
 service cron restart
 ```
 
-_crontab 시작_
+&nbsp;_crontab 시작_
