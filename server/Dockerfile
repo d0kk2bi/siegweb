@@ -1,5 +1,8 @@
 FROM ubuntu:20.04
 
+# Change TimeZone
+RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
 # Update ubuntu
 RUN apt update && apt upgrade -y
 
@@ -26,6 +29,9 @@ RUN apt install docker-ce docker-ce-cli containerd.io -y
 # Install docker-compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
+
+# Copy server files
+COPY server.py /server/server.py
 
 # Clone CTFd
 RUN git clone https://github.com/CTFd/CTFd.git /CTFd
