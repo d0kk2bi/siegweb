@@ -22,3 +22,9 @@ RUN pip3 install pymysql
 
 # Make flag directory & file
 RUN mkdir /flag && touch /flag/flag
+
+# Change client.py's mode
+RUN chmod 600 /client/client.py
+
+# Set crontab 
+RUN echo "0 */3 * * * /usr/bin/python3 /flag/client.py" >> /etc/crontab
