@@ -10,7 +10,7 @@ https://github.com/kwon99/KWCTF/blob/13efbeb754ad11607c0d6c19c88d7adcd32871b3/cl
 _team, user, passwd를 변경 (단, user, passwd는 위의 user, passwd와 동일함)_
 <br /><br />
 
-```shell
+```bash
 service mysql start
 mysql
 source /client/client.sql
@@ -20,7 +20,7 @@ _mysql 시작 및 변경 내용 적용_
 
 <br />
 
-```shell
+```bash
 service cron restart
 ```
 
