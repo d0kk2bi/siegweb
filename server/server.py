@@ -1,102 +1,45 @@
-import sqlite3, hashlib, time
+import sqlite3, hashlib, time, json, random
 
-conn = sqlite3.connect("/CTFd/CTFd/ctfd.db")
+class Server:
 
-cur = conn.cursor()
+    def __init__(self, path):
+        # db 연결
+        self.conn = sqlite3.connect(
+            f"/var/lib/docker/overlay2/{path}/merged/opt/CTFd/CTFd/ctfd.db"
+        )
+        self.cur = self.conn.cursor()
 
-# update all hidden
-sql = "update challenges set state='hidden'"
-cur.execute(sql)
-conn.commit()
+        # 계정 정보 불러오기
+        with open('user.json', 'r') as f:
+            self.user = json.load(f)
 
+        # hidden 방지
+        self.cur.execute("update challenges set state='hidden'")
+        self.conn.commit()
 
-# select last id
-sql = "select id from challenges order by id desc limit 1"
-cur.execute(sql)
-try:
-    no = (cur.fetchone())[0]
-except TypeError:
-    no = 0
+        # 시간 정보
+        self.time_key = time.localtime().tm_hour
 
-
-# insert into challenges visible
-teams = ['Team A', 'Team B', 'Team C']
-
-names = [['Tester1', 'Tester2', 'Tester3', 'Tester4'],
-         ['Tester5', 'Tester6', 'Tester7', 'Tester8'],
-         ['Tester9', 'Tester10', 'Tester11', 'Tester12']]
-
-nicks = [['nickname1', 'nickname2', 'nickname3', 'nickname4'],
-         ['nickname5', 'nickname6', 'nickname7', 'nickname8'],
-         ['nickname9', 'nickname10', 'nickname11'], 'nickname12']]
-
-
-sql = "insert into challenges (id, name, description, max_attempts, value, category, type, state) values "
-
-for i in range(3):
-    for j in range(4):
+    # challenge 혹은 flag의 마지막 번호 찾기
+    def select_last(self, condition):
+        self.cur.execute(
+            f"select id from {condition} order by id desc limit 1"
+            )
         try:
-            sql += "(%d, '%s', '%s', 0, %d, '%s', 'standard', 'visible')," % (i*4+j+no+1, names[i][j]+"_server", "http://sinb57.iptime.org:8080/"+nicks[i][j], 80, teams[i])
-        except IndexError:
-            pass
+            return (self.cur.fetchone())[0]
+        except TypeError:
+            return 0
 
-for i in range(3):
-    for j in range(4):
-        try:
-            sql += "(%d, '%s', '%s', 0, %d, '%s', 'standard', 'visible')," % (i*4+j+no+12, names[i][j]+"_db", "http://sinb57.iptime.org:8080/"+nicks[i][j], 50, teams[i])
-        except IndexError:
-            pass
+    # FLAG 생성
+    def generate_flag(self, username, condition):
+        enc = hashlib.md5()
+        random_key = random.random
+        key = f"kknock_hack_def_{str(random_key)}_{self.user[username]}_{self.time_key}"
 
-sql = sql[:-1]
+        enc.update((key + condition).encode("utf-8"))
 
-cur.execute(sql)
-conn.commit()
+        return f"flag{{{enc.hexdigest()}}}"
 
-
-
-# make flag
-now = time.localtime()
-hour = now.tm_hour
-
-
-# select last id
-sql = "select id from flags order by id desc limit 1"
-cur.execute(sql)
-try:
-    no = (cur.fetchone())[0]
-except TypeError:
-    no = 0
-
-
-sql = "insert into flags (id, challenge_id, type, content) values "
-
-for i in range(3):
-    for j in range(4):
-        try:
-            enc = hashlib.md5()
-            key = "hacking_homepage_13st_%s_%s_%s_" % (teams[i], nicks[i][j], "%02d" % hour)
-            enc.update((key+"server").encode("utf-8"))
-            flag = "flag{" + enc.hexdigest() + "}"
-            sql += "(%d, %d, '%s', '%s')," % (i*4+j+no+1, i*4+j+no+1, 'static', flag)
-        except IndexError:
-            pass
-
-
-for i in range(3):
-    for j in range(4):
-        try:
-            enc = hashlib.md5()
-            key = "hacking_homepage_13st_%s_%s_%s_" % (teams[i], nicks[i][j], "%02d" % hour)
-            enc.update((key+"db").encode("utf-8"))
-            flag = "flag{" + enc.hexdigest() + "}"
-
-            sql += "(%d, %d, '%s', '%s')," % (i*4+j+no+12, i*4+j+no+12, 'static', flag)
-        except IndexError:
-            pass
-
-sql = sql[:-1]
-
-cur.execute(sql)
-conn.commit()
  
-conn.close()
+if "__name__" == "__main__":
+    server = Server()
