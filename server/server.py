@@ -150,9 +150,7 @@ if __name__ == "__main__":
     # DB 초기화 여부
     delete = sys.argv[1]
 
-    server = Server(
-        "952cd60c88ce6e741827917ade8023c757b03bb0e2611e15b2ba7d651f1b9c5e", delete
-    )
+    server = Server("your_container_name", delete)
 
     server.flag_save()
 
