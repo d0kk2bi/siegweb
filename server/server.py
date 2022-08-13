@@ -11,7 +11,7 @@ class Server:
         self.cur = self.conn.cursor()
 
         # 계정 정보 불러오기
-        with open("user.json", "r") as f:
+        with open("json/user.json", "r") as f:
             self.user_dict = json.load(f)
 
         # 이전 문제들 hidden 처리 (삭제와 유사하게 작동하게 됨)
@@ -64,7 +64,7 @@ class Server:
             ]
 
         # json 파일에 쓰기
-        with open("flag.json", "w") as f:
+        with open("json/flag.json", "w") as f:
             json.dump(self.flag_dict, f, indent=4)
 
     # challenge 생성
