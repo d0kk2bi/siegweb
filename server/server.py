@@ -19,7 +19,7 @@ class Server:
         self.conn.commit()
 
         # 이전 문제들 삭제 처리
-        if delete == "-delete":
+        if delete == "--delete":
             self.cur.execute("delete from challenges")
             self.conn.commit()
 
