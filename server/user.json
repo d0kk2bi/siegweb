@@ -1,0 +1,4 @@
+{
+    "user": [1, "Team", "server_address", "token"],
+    "user2": [2, "TeamB", "server_address2", "token2"]
+}
