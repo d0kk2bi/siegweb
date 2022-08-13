@@ -1,8 +1,8 @@
-import sqlite3, hashlib, time, json, random
+import sqlite3, hashlib, time, json, random, sys
 
 
 class Server:
-    def __init__(self, path):
+    def __init__(self, path, delete):
         # db 연결
         self.conn = sqlite3.connect(
             f"/var/lib/docker/overlay2/{path}/merged/opt/CTFd/CTFd/ctfd.db"
@@ -14,9 +14,17 @@ class Server:
         with open("user.json", "r") as f:
             self.user_dict = json.load(f)
 
-        # hidden 방지
+        # 이전 문제들 hidden 처리 (삭제와 유사하게 작동하게 됨)
         self.cur.execute("update challenges set state='hidden'")
         self.conn.commit()
+
+        # 이전 문제들 삭제 처리
+        if delete == "-delete":
+            self.cur.execute("delete from challenges")
+            self.conn.commit()
+
+            self.cur.execute("delete from flags")
+            self.conn.commit()
 
         # 시간 정보
         self.time_key = time.localtime().tm_hour
@@ -106,8 +114,8 @@ class Server:
         for key in self.user_dict:
             try:
                 sql += "(%d, %d, '%s', '%s')," % (
-                    self.user_dict[key][0] + self.select_last("challenges"),
-                    self.user_dict[key][0] + self.select_last("challenges"),
+                    self.user_dict[key][0] + self.select_last("flags"),
+                    self.user_dict[key][0] + self.select_last("flags"),
                     "static",
                     self.flag_dict[key][0],
                 )
@@ -119,10 +127,10 @@ class Server:
             try:
                 sql += "(%d, %d, '%s', '%s')," % (
                     self.user_dict[key][0]
-                    + self.select_last("challenges")
+                    + self.select_last("flags")
                     + len(self.user_dict),
                     self.user_dict[key][0]
-                    + self.select_last("challenges")
+                    + self.select_last("flags")
                     + len(self.user_dict),
                     "static",
                     self.flag_dict[key][1],
@@ -139,7 +147,12 @@ class Server:
 
 
 if __name__ == "__main__":
-    server = Server("952cd60c88ce6e741827917ade8023c757b03bb0e2611e15b2ba7d651f1b9c5e")
+    # DB 초기화 여부
+    delete = sys.argv[1]
+
+    server = Server(
+        "952cd60c88ce6e741827917ade8023c757b03bb0e2611e15b2ba7d651f1b9c5e", delete
+    )
 
     server.flag_save()
 
