@@ -61,15 +61,12 @@ class Server:
 
     # challenge 생성
     def db_setting_challenge(self):
-        sql = (
-            "insert into challenges (id, name, description, max_attempts, "
-            "values, category, type, state) values "
-        )
+        sql = "insert into challenges (id, name, description, max_attempts, value, category, type, state) values "
 
         # db challenge 생성
         for key in self.user_dict:
             try:
-                sql += "(%d, '%s', '%s', 0, '%d', '%s', 'standard', 'visible')," % (
+                sql += "(%d, '%s', '%s', 0, %d, '%s', 'standard', 'visible')," % (
                     self.user_dict[key][0] + self.select_last("challenges"),
                     key + "_db",
                     self.user_dict[key][2],
@@ -82,7 +79,7 @@ class Server:
         # server challenge 생성
         for key in self.user_dict:
             try:
-                sql += "(%d, '%s', '%s' 0, %d, '%s', 'standard', 'visible')," % (
+                sql += "(%d, '%s', '%s', 0, %d, '%s', 'standard', 'visible')," % (
                     self.user_dict[key][0]
                     + self.select_last("challenges")
                     + len(self.user_dict),
@@ -112,7 +109,7 @@ class Server:
                     self.user_dict[key][0] + self.select_last("challenges"),
                     self.user_dict[key][0] + self.select_last("challenges"),
                     "static",
-                    self.flag_dict[key],
+                    self.flag_dict[key][0],
                 )
             except IndexError:
                 pass
@@ -127,6 +124,8 @@ class Server:
                     self.user_dict[key][0]
                     + self.select_last("challenges")
                     + len(self.user_dict),
+                    "static",
+                    self.flag_dict[key][1],
                 )
             except IndexError:
                 pass
