@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 # Timezone 변경
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime

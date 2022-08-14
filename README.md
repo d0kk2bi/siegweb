@@ -29,3 +29,18 @@ service cron restart
 ```
 challenges 삭제 시 db 생성이 안되는 오류
 ```
+
+### server
+
+#### 필요한 패키지 설치
+
+_\*python3, docker, docker-compose가 설치되어있다면 건너뛰어도 괜찮습니다._
+
+```bash
+sudo chmod +x requirement
+sudo ./requirement
+```
+
+_실행 권한 부여 및 실행_
+
+####
