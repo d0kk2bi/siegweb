@@ -14,6 +14,7 @@ class Client:
 
     # 서버에서 FLAG 받아오기
     def get_flag(self):
+        print(self.flag_addr)
         # 전체 FLAG 받아오기
         all_flag = requests.get(self.flag_addr).text
 
@@ -50,9 +51,7 @@ class Client:
 
 
 if __name__ == "__main__":
-    client = Client(
-        "nickname", "token", "your_database_id", "your_database_pw", "server_address",
-    )
+    client = Client("token", "your_database_id", "your_database_pw", "server_address",)
     client.get_flag()
     client.save_flag_db()
     client.save_flag_server()
