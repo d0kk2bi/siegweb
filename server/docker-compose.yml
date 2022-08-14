@@ -8,7 +8,8 @@ services:
       - "8000:8000"
   app:
     build:
-      dockerfile: .
+      context: .
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "1105:5000"
