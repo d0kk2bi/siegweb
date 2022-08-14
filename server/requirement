@@ -3,7 +3,7 @@
 # Timezone 변경
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-# ubuntu 업데이트
+# ubuntu update
 apt update && apt upgrade -y
 
 # 필요 패키지 설치
@@ -19,7 +19,7 @@ echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# docker 업데이트
+# docker update
 apt update -y
 
 # docker engine 설치
