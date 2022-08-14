@@ -148,7 +148,10 @@ class Server:
 
 if __name__ == "__main__":
     # DB 초기화 여부
-    delete = sys.argv[1]
+    try:
+        delete = sys.argv[1]
+    except:
+        pass
 
     server = Server("your_container_name", delete)
 
