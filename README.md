@@ -25,3 +25,7 @@ service cron restart
 ```
 
 &nbsp;_crontab 시작_
+
+```
+challenges 삭제 시 db 생성이 안되는 오류
+```
