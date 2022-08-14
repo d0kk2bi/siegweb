@@ -2,32 +2,18 @@
 
 ### 계정 생성 및 계정 값 변경 과정
 
-https://github.com/kwon99/KWCTF/blob/137d87a83c7d4500271317e064a0576f8504d9e0/client/client.sql#L2-L3
-_user, passwd 변경_
+https://github.com/kwon99/KWCTF/blob/171b2ce9a77e3de061f29d5ef94d705b0c56e9d6/client/client.py#L54
+_token, db 정보, 공방전 서버 주소 기입_
 <br /><br />
 
-https://github.com/kwon99/KWCTF/blob/13efbeb754ad11607c0d6c19c88d7adcd32871b3/client/client.py#L3-L5
-_team, user, passwd를 변경 (단, user, passwd는 위의 user, passwd와 동일함)_
-<br /><br />
+### crontab 설정
 
 ```bash
-service mysql start
-mysql
-source /client/client.sql
+crontab -e
 ```
 
-&nbsp;_mysql 시작 및 변경 내용 적용_
-
-<br />
-
-```bash
-service cron restart
 ```
-
-&nbsp;_crontab 시작_
-
-```
-challenges 삭제 시 db 생성이 안되는 오류
+* * * * * /usr/bin/python3 /설치한 경로/KWCTF/server/server.py
 ```
 
 ## server
