@@ -9,7 +9,7 @@ services:
 
   app:
     build:
-      dockerfile: Dockerfile
+      dockerfile: .
     ports:
       - "1105:5000"
     container_name: app
