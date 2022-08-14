@@ -27,9 +27,8 @@ def flag():
     with open("json/flag.json", "r") as f:
         flag_dict = json.load(f)
 
-    return flag_dict[user][0] + flag_dict[user][1]
+    return flag_dict[user][0] + "_" + flag_dict[user][1]
 
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000)
-
