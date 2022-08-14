@@ -6,13 +6,12 @@ services:
     restart: always
     ports:
       - "8000:8000"
-
-  app:
-    build:
-      dockerfile: .
-    ports:
-      - "1105:5000"
-    container_name: app
-    volumes:
-      - .:/server
-    command: python3 -m flask run --host=0.0.0.0
+#  app:
+#    build:
+#      dockerfile: .
+#    ports:
+#      - "1105:5000"
+#    container_name: app
+#    volumes:
+#      - .:/server
+#    command: python3 -m flask run --host=0.0.0.0
