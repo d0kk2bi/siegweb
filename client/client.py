@@ -1,33 +1,28 @@
-import pymysql, hashlib, time, os
+import pymysql, requests, os
 
 
 class Client:
-    def __init__(self, user, token, db_id, db_pw):
-        # 사용자 이름 및 토큰 정보
+    def __init__(self, user, token, db_id, db_pw, server_addr):
+        # 사용자 이름 및 접속 정보
         self.user = user
         self.token = token
+        self.flag_addr = f"http://{server_addr}/?token={token}"
 
         # 사용자 DB 정보
         self.db_id = db_id
         self.db_pw = db_pw
 
-        # 시간 정보
-        self.time_key = time.localtime().tm_hour
+    # 서버에서 FLAG 받아오기
+    def get_flag(self):
+        # 전체 FLAG 받아오기
+        all_flag = requests.get(self.flag_addr).text
 
-    # 토큰을 기반으로 FLAG 생성
-    def generate_flag(self):
-        # 키 생성
-        key = f"kknock_hacking_defence_{self.user}_{self.token}_{self.time_key}_"
+        # DB FLAG와 서버 FLAG로 나누기
+        all_flag_lst = all_flag.split("_")
 
-        # 데이터베이스의 FLAG 생성
-        enc = hashlib.md5
-        enc.update((key + "db").encode("utf-8"))
-        self.db_flag = f"flag{{{enc.hexdigest()}}}"
-
-        # 서버의 FLAG 생성
-        enc = hashlib.md5()
-        enc.update((key + "server").encode("utf-8"))
-        self.server_flag = f"flag{{{enc.hexdigest()}}}"
+        # DB FLAG와 서버 FLAG 값 넣기
+        self.db_flag = all_flag_lst[0]
+        self.server_flag = all_flag_lst[1]
 
     # 데이터베이스에 FLAG 저장
     def save_flag_db(self):
@@ -55,8 +50,9 @@ class Client:
 
 
 if __name__ == "__main__":
-    client = Client("nickname", "your_token", "your_database_id", "your_database_pw")
-
-    client.generate_flag()
+    client = Client(
+        "nickname", "token", "your_database_id", "your_database_pw", "server_address",
+    )
+    client.get_flag()
     client.save_flag_db()
     client.save_flag_server()
