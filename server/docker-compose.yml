@@ -1,19 +1,18 @@
 version: "3"
 
-kknock:
-  services:
-    ctfd:
-      image: ctfd
-      restart: always
-      ports:
-        - "8000:8000"
+services:
+  ctfd:
+    image: ctfd/ctfd
+    restart: always
+    ports:
+      - "8000:8000"
 
-    app:
-      build:
-        dockerfile: Dockerfile
-      ports:
-        - "1105:5000"
-      container_name: app
-      volumes:
-        - .:/server
-      command: python3 -m flask run --host=0.0.0.0
+  app:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "1105:5000"
+    container_name: app
+    volumes:
+      - .:/server
+    command: python3 -m flask run --host=0.0.0.0
