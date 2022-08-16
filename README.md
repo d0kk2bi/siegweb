@@ -1,6 +1,21 @@
-## client
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/kwon99/siegweb">
+    <img src="img/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-### 계정 생성 및 계정 값 변경 과정
+<h3 align="center">siegweb</h3>
+</div>
+
+## 👨‍💻 Introduction
+CTFD 기반의 웹 공방전 세팅 프로그램
+> 서버에서 생성한 FLAG를 클라이언트에 적용, 각 클라이언트를 해킹하며 점수를 얻는 시스템입니다.
+
+## ⚙️ Setting
+
+
+## 계정 생성 및 계정 값 변경 과정
 
 https://github.com/kwon99/KWCTF/blob/171b2ce9a77e3de061f29d5ef94d705b0c56e9d6/client/client.py#L54
 _token, db 정보, 공방전 서버 주소 기입_
