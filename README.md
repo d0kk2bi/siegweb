@@ -141,7 +141,7 @@ sudo cd /seigweb/server && docker-compose up -d
 
 _서버에 접속해 대회 세팅 및 유저와 팀 등록 하시면 됩니다_
 
-### DB 연결
+#### DB 연결
 ```bash
 # 여기에 걸린 컨테이너의 이름 복사 (e.g. 7705656~01)
 find /var/lib/docker/overlay2/ -name 'ctfd.db'
@@ -163,14 +163,11 @@ self.conn = sqlite3.connect(
 )
 ```
 
-### crontab 설정
+#### crontab 설정
 
 ```bash
 crontab -e
-```
 
+# 마지막 줄에 추가
+0 */3 * * * /usr/bin/python3 /siegweb/server/server.py
 ```
-* * * * * /usr/bin/python3 /설치한 경로/KWCTF/server/server.py
-```
-
-_원하는 시간만큼 설정하시면 됩니다._
