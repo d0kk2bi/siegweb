@@ -11,6 +11,9 @@
 ## 👨‍💻 Introduction
 CTFD 기반의 웹 공방전 세팅 프로그램
 > 서버에서 생성한 FLAG를 클라이언트에 적용, 각 클라이언트를 해킹하며 점수를 얻는 시스템입니다.
+<img src="https://github.com/kwon99/siegweb/blob/main/img/ctfd1.png" width="1000">
+<img src="https://github.com/kwon99/siegweb/blob/main/img/flask1.png" width="1000">
+
 
 ## ⚙️ Setting
 
