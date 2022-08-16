@@ -36,10 +36,14 @@ ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
 ### MySQL 계정 및 FLAG DB 생성
 > 이미 공방전용 계정이 존재한다면 아래 두 줄을 삭제하고 진행합니다.
+```sql
+# client/client.sql
+# https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.sql#L2-L3
+# user, passwd 변경
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'passwd'; 
+GRANT ALL PRIVILEGES ON *.* to 'user'@'localhost'; 
+```
 
-https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.sql#L2-L3
-_user, passwd 변경_
-<br />
 ```sql
 # sql 로그인 이후 진행 (e.g. mysql -u root -p)
 source /siegweb/client/client.sql
@@ -51,8 +55,12 @@ sudo mkdir /flag && touch /flag/flag
 ```
 
 ### 계정 값 변경
-https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.py#L53-L54
-_token, db 정보, 공방전 서버 주소 기입_
+```python
+# client/client.py
+# https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.py#L53-L54
+# token, db 정보, 공방전 서버 주소 기입
+client = Client("token", "your_database_id", "your_database_pw", "server_address") 
+```
 
 ### 실행파일 권한 설정
 ```bash
@@ -68,21 +76,24 @@ crontab -e
 ```
 
 ## 🐳 Client with DOCKER
-Docker
-## 계정 생성 및 계정 값 변경 과정
+> Docker는 위 내용들의 대부분을 설정해둔 상태이므로, 변경 부분만 변경합니다.
 
-https://github.com/kwon99/KWCTF/blob/171b2ce9a77e3de061f29d5ef94d705b0c56e9d6/client/client.py#L54
-_token, db 정보, 공방전 서버 주소 기입_
-<br /><br />
-
-### crontab 설정
-
-```bash
-crontab -e
+### MySQL 계정 및 FLAG DB 생성
+> 이미 공방전용 계정이 존재한다면 아래 두 줄을 삭제하고 진행합니다.
+```sql
+# client/client.sql
+# https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.sql#L2-L3
+# user, passwd 변경
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'passwd'; 
+GRANT ALL PRIVILEGES ON *.* to 'user'@'localhost'; 
 ```
 
-```
-* * * * * /usr/bin/python3 /설치한 경로/KWCTF/server/server.py
+### 계정 값 변경
+```python
+# client/client.py
+# https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.py#L53-L54
+# token, db 정보, 공방전 서버 주소 기입
+client = Client("token", "your_database_id", "your_database_pw", "server_address") 
 ```
 
 ## server
