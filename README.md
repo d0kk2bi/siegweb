@@ -106,6 +106,11 @@ client = Client("token", "your_database_id", "your_database_pw", "server_address
 
 
 ## 🖥 Server
+> server.py는 각 사용자 별로 FLAG를 생성하고 이를 CTFD 서버 그리고 JSON에 저장합니다.
+
+> JSON은 사용자의 정보와 현재 시간의 FLAG를 저장합니다.
+
+> flask 서버는 사용자의 토큰에 맞는 FLAG를 보내줍니다.
 
 #### 시간 설정
 ```bash
