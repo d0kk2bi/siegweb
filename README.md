@@ -9,15 +9,66 @@
 </div>
 
 ## 👨‍💻 Introduction
-CTFD 기반의 웹 공방전 세팅 프로그램
+CTFD 기반의 웹 공방전 설정 프로그램
 > 서버에서 생성한 FLAG를 클라이언트에 적용, 각 클라이언트를 해킹하며 점수를 얻는 시스템입니다.
 <img src="https://github.com/kwon99/siegweb/blob/main/img/ctfd1.png" width="1000">
-<img src="https://github.com/kwon99/siegweb/blob/main/img/flask1.png" width="1000">
-
 
 ## ⚙️ Setting
+**클라이언트의 경우 Docker 사용 유무에 따라 나뉩니다.**
+> Docker version은 이하의 내용들이 미리 세팅되어있는 Dockerfile을 이용합니다. 
+<br/>
 
+**서버의 경우 특별한 분기점은 없습니다.**
 
+### 설치
+
+```bash
+git clone https://github.com/kwon99/siegweb.git /siegweb
+```
+
+## 💻 Client
+> 사용되는 단 하나의 파일 (client.py)는 서버로부터 FLAG를 받아와 클라이언트에 넣어주는 역할을 합니다.
+
+### 시간 설정
+```bash
+ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+```
+
+### MySQL 계정 및 FLAG DB 생성
+> 이미 공방전용 계정이 존재한다면 아래 두 줄을 삭제하고 진행합니다.
+
+https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.sql#L2-L3
+_user, passwd 변경_
+<br />
+```sql
+# sql 로그인 이후 진행 (e.g. mysql -u root -p)
+source /siegweb/client/client.sql
+```
+
+### FLAG server 생성
+```
+sudo mkdir /flag && touch /flag/flag
+```
+
+### 계정 값 변경
+https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.py#L53-L54
+_token, db 정보, 공방전 서버 주소 기입_
+
+### 실행파일 권한 설정
+```bash
+sudo chmod 600 /siegweb/client/client.py
+```
+
+### Crontab 설정
+```bash
+crontab -e
+
+# 마지막 줄에 추가
+0 */3 * * * /usr/bin/python3 /siegweb/client/client.py
+```
+
+## 🐳 Client with DOCKER
+Docker
 ## 계정 생성 및 계정 값 변경 과정
 
 https://github.com/kwon99/KWCTF/blob/171b2ce9a77e3de061f29d5ef94d705b0c56e9d6/client/client.py#L54
