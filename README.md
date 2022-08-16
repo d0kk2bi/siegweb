@@ -9,16 +9,20 @@
 </div>
 
 ## 👨‍💻 Introduction
+
 CTFD 기반의 웹 공방전 설정 프로그램
+
 > 서버에서 생성한 FLAG를 클라이언트에 적용, 각 클라이언트를 해킹하며 점수를 얻는 시스템입니다.
-<img src="https://github.com/kwon99/siegweb/blob/main/img/ctfd1.png" width="1000">
+> <img src="https://github.com/kwon99/siegweb/blob/main/img/ctfd1.png" width="1000">
 
 <br /><br />
 
 ## ⚙️ Setting
+
 **클라이언트의 경우 Docker 사용 유무에 따라 나뉩니다.**
-> Docker version은 이하의 내용들이 미리 세팅되어있는 Dockerfile을 이용합니다. 
-<br/>
+
+> Docker version은 이하의 내용들이 미리 세팅되어있는 Dockerfile을 이용합니다.
+> <br/>
 
 **서버의 경우 특별한 분기점은 없습니다.**
 
@@ -31,21 +35,25 @@ git clone https://github.com/kwon99/siegweb.git /siegweb
 <br /><br />
 
 ## 💻 Client
+
 > 사용되는 단 하나의 파일 (client.py)는 서버로부터 FLAG를 받아와 클라이언트에 넣어주는 역할을 합니다.
 
 #### 시간 설정
+
 ```bash
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 ```
 
 #### MySQL 계정 및 FLAG DB 생성
+
 > 이미 공방전용 계정이 존재한다면 아래 두 줄을 삭제하고 진행합니다.
+
 ```sql
 # client/client.sql
 # https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.sql#L2-L3
 # user, passwd 변경
-CREATE USER 'user'@'localhost' IDENTIFIED BY 'passwd'; 
-GRANT ALL PRIVILEGES ON *.* to 'user'@'localhost'; 
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'passwd';
+GRANT ALL PRIVILEGES ON *.* to 'user'@'localhost';
 ```
 
 ```sql
@@ -54,24 +62,28 @@ source /siegweb/client/client.sql
 ```
 
 #### FLAG server 생성
+
 ```
 sudo mkdir /flag && touch /flag/flag
 ```
 
 #### 계정 값 변경
+
 ```python
 # client/client.py
 # https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.py#L53-L54
 # token, db 정보, 공방전 서버 주소 기입
-client = Client("token", "your_database_id", "your_database_pw", "server_address") 
+client = Client("token", "your_database_id", "your_database_pw", "server_address")
 ```
 
 #### 실행파일 권한 설정
+
 ```bash
 sudo chmod 600 /siegweb/client/client.py
 ```
 
 #### Crontab 설정
+
 ```bash
 crontab -e
 
@@ -82,37 +94,42 @@ crontab -e
 <br /><br />
 
 ## 🐳 Client with DOCKER
+
 > Docker는 위 내용들의 대부분을 설정해둔 상태이므로, 변경 부분만 변경합니다.
 
 #### MySQL 계정 및 FLAG DB 생성
+
 > 이미 공방전용 계정이 존재한다면 아래 두 줄을 삭제하고 진행합니다.
+
 ```sql
 # client/client.sql
 # https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.sql#L2-L3
 # user, passwd 변경
-CREATE USER 'user'@'localhost' IDENTIFIED BY 'passwd'; 
-GRANT ALL PRIVILEGES ON *.* to 'user'@'localhost'; 
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'passwd';
+GRANT ALL PRIVILEGES ON *.* to 'user'@'localhost';
 ```
 
 #### 계정 값 변경
+
 ```python
 # client/client.py
 # https://github.com/kwon99/siegweb/blob/7cb5fa8cdaa1dce43f92c87f73dca50616b25424/client/client.py#L53-L54
 # token, db 정보, 공방전 서버 주소 기입
-client = Client("token", "your_database_id", "your_database_pw", "server_address") 
+client = Client("token", "your_database_id", "your_database_pw", "server_address")
 ```
 
 <br /><br />
 
-
 ## 🖥 Server
-> server.py는 각 사용자 별로 FLAG를 생성하고 이를 CTFD 서버 그리고 JSON에 저장합니다.
 
-> JSON은 사용자의 정보와 현재 시간의 FLAG를 저장합니다.
+> server.py는 각 참가자 별로 FLAG를 생성하고 이를 CTFD 서버 그리고 JSON에 저장합니다.
 
-> flask 서버는 사용자의 토큰에 맞는 FLAG를 보내줍니다.
+> JSON은 참가자의 정보와 현재 시간의 FLAG를 저장합니다.
+
+> flask 서버는 참가자의 토큰에 맞는 FLAG를 보내줍니다.
 
 #### 시간 설정
+
 ```bash
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 ```
@@ -138,6 +155,7 @@ sudo cd /siegweb/server && ./requirement
 ```
 
 #### CTFD 및 flask 실행
+
 ```
 sudo cd /seigweb/server && docker-compose up -d
 ```
@@ -147,6 +165,7 @@ sudo cd /seigweb/server && docker-compose up -d
 _서버에 접속해 대회 세팅 및 유저와 팀 등록 하시면 됩니다_
 
 #### DB 연결
+
 ```bash
 # 여기에 걸린 컨테이너의 이름 복사 (e.g. 7705656~01)
 find /var/lib/docker/overlay2/ -name 'ctfd.db'
