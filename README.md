@@ -129,12 +129,6 @@ client = Client("token", "your_database_id", "your_database_pw", "server_address
 
 > flask 서버는 참가자의 토큰에 맞는 FLAG를 보내줍니다.
 
-#### 시간 설정
-
-```bash
-ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-```
-
 #### 필요한 패키지 설치 (python3, docker, docker-compose)
 
 ```bash
@@ -195,4 +189,14 @@ crontab -e
 
 # 마지막 줄에 추가
 0 */3 * * * /usr/bin/python3 /siegweb/server/server.py
+```
+
+#### 오류가 날 경우
+
+> Challenge의 개수와 FLAG의 개수가 다를 경우 오류가 발생할 수 있습니다. (e.g. Challenge만 있고 FLAG가 없을 때)
+
+```bash
+# 근본적인 이유를 찾아 제거하는 것이 제일 좋은 방법이지만, 여의치 않을 경우를 상정해 `--delete` 인자를 추가하였습니다.
+# --delete 인자를 사용하면 현재 CTFD의 모든 Challenge와 FLAG를 초기화합니다.
+python3 server.py --delete
 ```
