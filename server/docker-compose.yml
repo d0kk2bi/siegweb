@@ -12,7 +12,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "1105:5000"
+      - "5000:5000"
     volumes:
       - .:/server
     command: python3 -m flask run --host=0.0.0.0
