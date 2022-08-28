@@ -2,9 +2,8 @@ import pymysql, requests, os
 
 
 class Client:
-    def __init__(self, user, token, db_id, db_pw, server_addr):
+    def __init__(self, token, db_id, db_pw, server_addr):
         # 사용자 이름 및 접속 정보
-        self.user = user
         self.token = token
         self.flag_addr = f"http://{server_addr}/?token={token}"
 
