@@ -93,7 +93,7 @@ chmod 600 /siegweb/client/client.py
 crontab -e
 
 # 마지막 줄에 추가
-0 */3 * * * /usr/bin/python3 /siegweb/client/client.py
+1 */3 * * * /usr/bin/python3 /siegweb/client/client.py
 ```
 
 <br /><br />
@@ -192,7 +192,7 @@ self.conn = sqlite3.connect(
 crontab -e
 
 # 마지막 줄에 추가
-59 */2 * * * /usr/bin/python3 /siegweb/server/server.py
+0 */3 * * * /usr/bin/python3 /siegweb/server/server.py
 ```
 
 #### 오류가 날 경우
