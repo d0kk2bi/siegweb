@@ -1,4 +1,4 @@
-import pymysql, requests, os
+import pymysql, requests, os, time
 
 
 class Client:
@@ -51,6 +51,7 @@ class Client:
 
 if __name__ == "__main__":
     client = Client("token", "your_database_id", "your_database_pw", "server_address",)
+    time.sleep(30)
     client.get_flag()
     client.save_flag_db()
     client.save_flag_server()
