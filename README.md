@@ -93,7 +93,7 @@ chmod 600 /siegweb/client/client.py
 crontab -e
 
 # 마지막 줄에 추가
-1 */3 * * * /usr/bin/python3 /siegweb/client/client.py
+0 */3 * * * /usr/bin/python3 /siegweb/client/client.py
 ```
 
 <br /><br />
