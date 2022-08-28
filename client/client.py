@@ -51,6 +51,7 @@ class Client:
 
 if __name__ == "__main__":
     client = Client("token", "your_database_id", "your_database_pw", "server_address",)
+    # 서버의 crontab 이후에 클라이언트의 crontab이 이루어지도록 설정
     time.sleep(30)
     client.get_flag()
     client.save_flag_db()
