@@ -17,7 +17,6 @@ def flag():
     for key, value in user_dict.items():
         if value[3] == token:
             user = key
-        break
 
     # 값이 제대로 들어갔는지 확인
     if user == "":
