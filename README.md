@@ -39,6 +39,8 @@ git clone https://github.com/kwon99/siegweb.git /siegweb
 
 > 사용되는 단 하나의 파일 (client.py)는 서버로부터 FLAG를 받아와 클라이언트에 넣어주는 역할을 합니다.
 
+> 이하의 모든 명령어는 `sudo su` 상태에서 진행하셔야 편합니다.
+
 #### 시간 설정
 
 ```bash
@@ -65,7 +67,9 @@ source /siegweb/client/client.sql
 #### FLAG server 생성
 
 ```
-sudo mkdir /flag && touch /flag/flag
+mkdir /flag
+cd /flag
+touch flag
 ```
 
 #### 계정 값 변경
@@ -80,7 +84,7 @@ client = Client("token", "your_database_id", "your_database_pw", "server_address
 #### 실행파일 권한 설정
 
 ```bash
-sudo chmod 600 /siegweb/client/client.py
+chmod 600 /siegweb/client/client.py
 ```
 
 #### Crontab 설정
@@ -125,7 +129,7 @@ client = Client("token", "your_database_id", "your_database_pw", "server_address
 
 > server.py는 각 참가자 별로 FLAG를 생성하고 이를 CTFD 서버 그리고 JSON에 저장합니다.
 
-> JSON은 참가자의 정보와 현재 시간의 FLAG를 저장합니다.
+> JSON은 참가자의 정보와 현재 시간의 FLAG를 저장합니다. 변경될 때 마다 `docker-compose restart` 필요합니다.
 
 > flask 서버는 참가자의 토큰에 맞는 FLAG를 보내줍니다.
 
@@ -188,7 +192,7 @@ self.conn = sqlite3.connect(
 crontab -e
 
 # 마지막 줄에 추가
-0 */3 * * * /usr/bin/python3 /siegweb/server/server.py
+59 */2 * * * /usr/bin/python3 /siegweb/server/server.py
 ```
 
 #### 오류가 날 경우
