@@ -1,5 +1,4 @@
-import pymysql, requests, os, time
-
+import pymysql, requests, os, random, string, time
 
 class Client:
     def __init__(self, token, db_id, db_pw, server_addr):
@@ -26,12 +25,24 @@ class Client:
 
     # 데이터베이스에 FLAG 저장
     def save_flag_db(self):
+        char_set = string.ascii_lowercase + string.digits
+        new_tbl=''.join(random.sample(char_set*6, 6))
+        new_col=''.join(random.sample(char_set*6, 6))
         db = pymysql.connect(
             host="localhost", user=self.db_id, password=self.db_pw, db="flag"
         )
 
         cursor = db.cursor()
-        sql = f"update flag set flag='{self.db_flag}'"
+        cursor.execute("show tables")
+        before_tbl = cursor.fetchone()[0]
+        cursor.execute(f"desc {before_tbl}")
+        before_col = cursor.fetchone()[0]
+        change_tbl = f"RENAME TABLE {before_tbl} TO {new_tbl}"
+        cursor.execute(change_tbl)
+        change_col = f"alter table {new_tbl} change {before_col} {new_col} varchar(50)"
+        cursor.execute(change_col)
+        db.commit()
+        sql = f"update {new_tbl} set {new_col}='{self.db_flag}'"
         cursor.execute(sql)
 
         db.commit()
